@@ -119,7 +119,7 @@ function upateCalcs() {
 var triangleInputsPanel, trapezoidalInputsPanel;
 
 function quickSettings_setup() {
-
+//Having difficulty here. How did I get it right before
     function makeRadioBehaviour() {
         var isTrapActive = trapezoidalInputsPanel.getBoolean('Make Trapezoid Active?');
         var isTriActive = triangleInputsPanel.getBoolean('Make Triangle Active?');
