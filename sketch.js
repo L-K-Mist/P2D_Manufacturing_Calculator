@@ -103,7 +103,9 @@ function upateCalcs() {
         console.log(prism.area());
         console.log(prism.volume());
 
-
+        new String(prism.area());
+        volumeText =
+            new String(prism.volume());
 
         outputPanel.setText("Area is:", areaText);
         outputPanel.setText("Volume is:", volumeText);
@@ -112,16 +114,16 @@ function upateCalcs() {
     function updateTrapezoidCalcs() {
         prism = new trapezoidalPrism();
 
+    function updateTrapezoidCalcs() {
         var longLength = inputPanel.getRangeValue('Trapezoidal Long Length');
         var shortLength = inputPanel.getRangeValue('Trapezoidal Short Length');
         var height = inputPanel.getRangeValue('Trapezoidal Height');
         var thickness = inputPanel.getRangeValue('Trapezoidal Thickness');
-        
-        
-        
-        
 
+        prism = new trapezoidalPrism();
 
+        console.log(prism.area());
+        console.log(prism.volume());
 
     }
 }
