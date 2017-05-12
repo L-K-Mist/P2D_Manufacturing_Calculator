@@ -116,16 +116,42 @@ function upateCalcs() {
 
     }
 }
+var triangleInputsPanel, trapezoidalInputsPanel;
 
 function quickSettings_setup() {
+
+    function makeRadioBehaviour() {
+        var isTrapActive = trapezoidalInputsPanel.getBoolean('Make Trapezoid Active?');
+        var isTriActive = triangleInputsPanel.getBoolean('Make Triangle Active?');
+        //        console.log('Trap is' + trapezoidalInputsPanel.getBoolean('Make Trapezoid Active?'));
+        //        console.log('Tri is' + triangleInputsPanel.getBoolean('Make Triangle Active?'));
+        if (isTrapActive == true) {
+            triangleInputsPanel.setBoolean('Make Triangle Active?', false);
+
+            //TODO NEXT above works so do similar visa versa and such 
+        } else if (isTrapActive == false) {
+            triangleInputsPanel.setBoolean('Make Triangle Active?', true);
+        }
+
+        if (isTriActive == true) {
+            trapezoidalInputsPanel.setBoolean('Make Trapezoid Active?', false);
+        } else if (isTriActive == false) {
+            trapezoidalInputsPanel.setBoolean('Make Trapesoid Active?', true);
+        }
+
+
+    }
+
+    triangleInputsGUI();
+    trapezoidalInputsGUI();
     //Volume Calculation Inputs
     // var base, height, thickness;
-    triangleInputsPanel();
-    trapezoidalInputsPanel();
 
-    function triangleInputsPanel() {
+
+
+    function triangleInputsGUI() {
         triangleInputsPanel = QuickSettings.create(300, 100, 'Triangle Attributes');
-        triangleInputsPanel.addBoolean('Make Active?', true);
+        triangleInputsPanel.addBoolean('Make Triangle Active?', true, makeRadioBehaviour);
 
         triangleInputsPanel.addHTML('Tips', 'For fine tuning, nudge the active slider with your keyboard left and right arrows');
         triangleInputsPanel.addRange('Triangle Base', 5, 400, 1, setInputVariables);
@@ -134,18 +160,12 @@ function quickSettings_setup() {
         triangleInputsPanel.addButton('Calculate', upateCalcs);
     }
 
-    function makeRadioBehaviour() {
-       if (trapezoidalInputsPanel.getBoolean('Make Active?') == true){
-           triangleInputsPanel.setBoolean('Make Active?', false);
-           //TODO NEXT above works so do similar visa versa and such
-       }
-
-    }
 
 
-    function trapezoidalInputsPanel() {
+
+    function trapezoidalInputsGUI() {
         trapezoidalInputsPanel = QuickSettings.create(600, 100, 'Trapezoidal Attributes');
-        trapezoidalInputsPanel.addBoolean('Make Active?', false, makeRadioBehaviour);
+        trapezoidalInputsPanel.addBoolean('Make Trapezoid Active?', false, makeRadioBehaviour);
         trapezoidalInputsPanel.on
         trapezoidalInputsPanel.addHTML('Tips', 'For fine tuning, nudge the active slider with your keyboard left and right arrows');
         trapezoidalInputsPanel.addRange('Trapezoidal longLength', 5, 400, 1, setInputVariables);
