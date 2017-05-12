@@ -40,24 +40,17 @@ function triangularPrism(base, height, thickness) {
         var calc = this.area() * this.thickness;
         return calc;
     };
-
 }
 
 //Person.prototype.name = function() {
 //    return this.firstName + " " + this.lastName;
 //};
-
-
-
-
 var calcCanvas;
 var ingredientRatiosGUI;
 var volumeInputsGUI;
 
 function p5Gui_setup() {
     sliderRange(0, 30, 1);
-
-
     ingredientRatiosGUI = createGui('Ingredient Ratios');
     ingredientRatiosGUI.addGlobals('coffeeTinsWet', 'cupsClay', 'cupsLime', 'cupsPortland', 'cupsSand');
 
@@ -69,8 +62,6 @@ function p5Gui_setup() {
     //    triangularPrism.base = base;
     //    triangularPrism.height = height;
     //    triangularPrism.thickness = thickness;
-
-
     noLoop();
 }
 
@@ -111,8 +102,6 @@ function upateCalcs() {
         outputPanel.setText("Volume is:", volumeText);
     }
 
-    function updateTrapezoidCalcs() {
-        prism = new trapezoidalPrism();
 
     function updateTrapezoidCalcs() {
         var longLength = inputPanel.getRangeValue('Trapezoidal Long Length');
@@ -131,28 +120,39 @@ function upateCalcs() {
 function quickSettings_setup() {
     //Volume Calculation Inputs
     // var base, height, thickness;
-    function triangleInputs() {
-        inputPanel = QuickSettings.create(300, 100, 'Triangle Attributes');
-        inputPanel.addHTML('Tips', 'For fine tuning, nudge the active slider with your keyboard left and right arrows');
-        inputPanel.addRange('Triangle Base', 5, 400, 1, setInputVariables);
-        inputPanel.addRange('Triangle Height', 5, 400, 1, setInputVariables);
-        inputPanel.addRange('Triangle Thickness', 5, 400, 1, setInputVariables);
-        inputPanel.addButton('Calculate', upateCalcs);
+    triangleInputsPanel();
+    trapezoidalInputsPanel();
 
+    function triangleInputsPanel() {
+        triangleInputsPanel = QuickSettings.create(300, 100, 'Triangle Attributes');
+        triangleInputsPanel.addBoolean('Make Active?', true);
 
+        triangleInputsPanel.addHTML('Tips', 'For fine tuning, nudge the active slider with your keyboard left and right arrows');
+        triangleInputsPanel.addRange('Triangle Base', 5, 400, 1, setInputVariables);
+        triangleInputsPanel.addRange('Triangle Height', 5, 400, 1, setInputVariables);
+        triangleInputsPanel.addRange('Triangle Thickness', 5, 400, 1, setInputVariables);
+        triangleInputsPanel.addButton('Calculate', upateCalcs);
+    }
 
+    function makeRadioBehaviour() {
+       if (trapezoidalInputsPanel.getBoolean('Make Active?') == true){
+           triangleInputsPanel.setBoolean('Make Active?', false);
+           //TODO NEXT above works so do similar visa versa and such
+       }
 
     }
 
-    function trapezoidalInputs() {
-        inputPanel = QuickSettings.create(300, 100, 'Trapezoidal Attributes');
-        inputPanel.addHTML('Tips', 'For fine tuning, nudge the active slider with your keyboard left and right arrows');
-        inputPanel.addRange('Trapezoidal longLength', 5, 400, 1, setInputVariables);
-        inputPanel.addRange('Trapezoidal shortLength', 5, 400, 1, setInputVariables);
-        inputPanel.addRange('Trapezoidal Thickness', 5, 400, 1, setInputVariables);
-        inputPanel.addButton('Calculate', upateCalcs);
-    }
 
+    function trapezoidalInputsPanel() {
+        trapezoidalInputsPanel = QuickSettings.create(600, 100, 'Trapezoidal Attributes');
+        trapezoidalInputsPanel.addBoolean('Make Active?', false, makeRadioBehaviour);
+        trapezoidalInputsPanel.on
+        trapezoidalInputsPanel.addHTML('Tips', 'For fine tuning, nudge the active slider with your keyboard left and right arrows');
+        trapezoidalInputsPanel.addRange('Trapezoidal longLength', 5, 400, 1, setInputVariables);
+        trapezoidalInputsPanel.addRange('Trapezoidal shortLength', 5, 400, 1, setInputVariables);
+        trapezoidalInputsPanel.addRange('Trapezoidal Thickness', 5, 400, 1, setInputVariables);
+        trapezoidalInputsPanel.addButton('Calculate', upateCalcs);
+    }
 
     outputPanel = QuickSettings.create(300, 600, 'Volume Outputs');
     outputPanel.addText("Area is:");
