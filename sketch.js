@@ -55,18 +55,25 @@ function setInputVariables(){
     
     triangularPrism.height = inputPanel.getRangeValue('Triangle Height');
     
+    triangularPrism.thickness = inputPanel.getRangeValue('Triangle Thickness');
+    
+
+    
 }
 
 function quickSettings_setup() {
-    areaText = triangularPrism.area();
+    
+           areaText = triangularPrism.area();
     volumeText = triangularPrism.volume();
-       
     //Volume Calculation Inputs
     // var base, height, thickness;
 
     inputPanel = QuickSettings.create(300, 100);
     inputPanel.addRange('Triangle Base', 5, 400, 1, setInputVariables);
     inputPanel.addRange('Triangle Height', 5, 400, 1, setInputVariables);
+    inputPanel.addRange('Triangle Thickness', 5, 400, 1, setInputVariables);
+    
+ 
     
     
     outputPanel = QuickSettings.create(300, 300, 'Volume Outputs');
@@ -76,7 +83,7 @@ function quickSettings_setup() {
 
     outputPanel.addText("Volume is:");
     outputPanel.setText("Volume is:", volumeText);
-
+    
 }
 
 function setup() {
