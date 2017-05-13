@@ -4,20 +4,47 @@ var cupsLime = 16;
 var cupsPortland = 16;
 var cupsSand = 16;
 
-var triangularPrism = {
-    base: 27,
-    height: 19,
-    thickness: 8.5,
-    area: function () {
-        var calc = this.base * 0.5 * this.height;
+
+//Trapezoid (US)
+//Trapezium (UK)
+//Area = ½(a+b) × h
+//h = vertical height
+
+
+function trapezoidalPrism(longLength, shortLength, height, thickness) {
+    this.longLength = longLength;
+    this.shortLength = shortLength;
+    this.height = height;
+    this.thickness = thickness;
+    this.area = function () {
+        var calc = 0.5 * (this.longLength + this.longLength) * this.height;
         return calc;
-    },
-    volume: function () {
+    }
+    this.volume = function () {
         var calc = this.area() * this.thickness;
         return calc;
     }
-};
+}
 
+
+function triangularPrism(base, height, thickness) {
+    this.base = base;
+    this.height = height;
+    this.thickness = thickness;
+    this.area = function () {
+        var calc = this.base * 0.5 * this.height;
+        return calc;
+    };
+
+    this.volume = function () {
+        var calc = this.area() * this.thickness;
+        return calc;
+    };
+}
+
+//Person.prototype.name = function() {
+//    return this.firstName + " " + this.lastName;
+//};
 var calcCanvas;
 var ingredientRatiosGUI;
 var volumeInputsGUI;
@@ -26,17 +53,15 @@ function p5Gui_setup() {
     sliderRange(0, 30, 1);
     ingredientRatiosGUI = createGui('Ingredient Ratios');
     ingredientRatiosGUI.addGlobals('coffeeTinsWet', 'cupsClay', 'cupsLime', 'cupsPortland', 'cupsSand');
- 
-    
-//    
-//    sliderRange(1, 300, 5);
-//    volumeInputsGUI = createGui('Volume Inputs');
-//    volumeInputsGUI.addGlobals('base', 'height', 'thickness');
-//    triangularPrism.base = base;
-//    triangularPrism.height = height;
-//    triangularPrism.thickness = thickness;
 
 
+    //    
+    //    sliderRange(1, 300, 5);
+    //    volumeInputsGUI = createGui('Volume Inputs');
+    //    volumeInputsGUI.addGlobals('base', 'height', 'thickness');
+    //    triangularPrism.base = base;
+    //    triangularPrism.height = height;
+    //    triangularPrism.thickness = thickness;
     noLoop();
 }
 
@@ -44,46 +69,124 @@ var inputPanel;
 var outputPanel;
 var volumeString;
 var areaString;
+var areaText;
+var volumeText;
+var prism;
 
-    var areaText;
-    var volumeText;
+function setInputVariables() {
 
 
-function setInputVariables(){
-    triangularPrism.base = inputPanel.getRangeValue('Triangle Base');
-    console.log(triangularPrism.base + inputPanel.getRangeValue('Triangle Base'));
-    
-    triangularPrism.height = inputPanel.getRangeValue('Triangle Height');
-    
+
+
+
 }
 
+function upateCalcs() {
+
+    function updateTriangleCalcs() {
+        var base = inputPanel.getRangeValue('Triangle Base');
+        var height = inputPanel.getRangeValue('Triangle Height');
+        var thickness = inputPanel.getRangeValue('Triangle Thickness');
+
+        prism = new triangularPrism(base, height, thickness);
+        //    prism = new triangularPrism(inputPanel.getRangeValue('Triangle Base'), inputPanel.getRangeValue('Triangle Height'), inputPanel.getRangeValue('Triangle Thickness'));
+
+        console.log(prism.area());
+        console.log(prism.volume());
+
+        new String(prism.area());
+        volumeText =
+            new String(prism.volume());
+
+        outputPanel.setText("Area is:", areaText);
+        outputPanel.setText("Volume is:", volumeText);
+    }
+
+
+    function updateTrapezoidCalcs() {
+        var longLength = inputPanel.getRangeValue('Trapezoidal Long Length');
+        var shortLength = inputPanel.getRangeValue('Trapezoidal Short Length');
+        var height = inputPanel.getRangeValue('Trapezoidal Height');
+        var thickness = inputPanel.getRangeValue('Trapezoidal Thickness');
+
+        prism = new trapezoidalPrism();
+
+        console.log(prism.area());
+        console.log(prism.volume());
+
+    }
+}
+var triangleInputsPanel, trapezoidalInputsPanel;
+
 function quickSettings_setup() {
-    areaText = triangularPrism.area();
-    volumeText = triangularPrism.volume();
-       
+//Having difficulty here. How did I get it right before
+    function makeRadioBehaviour() {
+        var isTrapActive = trapezoidalInputsPanel.getBoolean('Make Trapezoid Active?');
+        var isTriActive = triangleInputsPanel.getBoolean('Make Triangle Active?');
+        //        console.log('Trap is' + trapezoidalInputsPanel.getBoolean('Make Trapezoid Active?'));
+        //        console.log('Tri is' + triangleInputsPanel.getBoolean('Make Triangle Active?'));
+        if (isTrapActive == true) {
+            triangleInputsPanel.setBoolean('Make Triangle Active?', false);
+
+            //TODO NEXT above works so do similar visa versa and such 
+        } else if (isTrapActive == false) {
+            triangleInputsPanel.setBoolean('Make Triangle Active?', true);
+        }
+
+        if (isTriActive == true) {
+            trapezoidalInputsPanel.setBoolean('Make Trapezoid Active?', false);
+        } else if (isTriActive == false) {
+            trapezoidalInputsPanel.setBoolean('Make Trapesoid Active?', true);
+        }
+
+
+    }
+
+    triangleInputsGUI();
+    trapezoidalInputsGUI();
     //Volume Calculation Inputs
     // var base, height, thickness;
 
-    inputPanel = QuickSettings.create(300, 100);
-    inputPanel.addRange('Triangle Base', 5, 400, 1, setInputVariables);
-    inputPanel.addRange('Triangle Height', 5, 400, 1, setInputVariables);
-    
-    
-    outputPanel = QuickSettings.create(300, 300, 'Volume Outputs');
 
+
+    function triangleInputsGUI() {
+        triangleInputsPanel = QuickSettings.create(300, 100, 'Triangle Attributes');
+        triangleInputsPanel.addBoolean('Make Triangle Active?', true, makeRadioBehaviour);
+
+        triangleInputsPanel.addHTML('Tips', 'For fine tuning, nudge the active slider with your keyboard left and right arrows');
+        triangleInputsPanel.addRange('Triangle Base', 5, 400, 1, setInputVariables);
+        triangleInputsPanel.addRange('Triangle Height', 5, 400, 1, setInputVariables);
+        triangleInputsPanel.addRange('Triangle Thickness', 5, 400, 1, setInputVariables);
+        triangleInputsPanel.addButton('Calculate', upateCalcs);
+    }
+
+
+
+
+    function trapezoidalInputsGUI() {
+        trapezoidalInputsPanel = QuickSettings.create(600, 100, 'Trapezoidal Attributes');
+        trapezoidalInputsPanel.addBoolean('Make Trapezoid Active?', false, makeRadioBehaviour);
+        trapezoidalInputsPanel.on
+        trapezoidalInputsPanel.addHTML('Tips', 'For fine tuning, nudge the active slider with your keyboard left and right arrows');
+        trapezoidalInputsPanel.addRange('Trapezoidal longLength', 5, 400, 1, setInputVariables);
+        trapezoidalInputsPanel.addRange('Trapezoidal shortLength', 5, 400, 1, setInputVariables);
+        trapezoidalInputsPanel.addRange('Trapezoidal Thickness', 5, 400, 1, setInputVariables);
+        trapezoidalInputsPanel.addButton('Calculate', upateCalcs);
+    }
+
+    outputPanel = QuickSettings.create(300, 600, 'Volume Outputs');
     outputPanel.addText("Area is:");
-    outputPanel.setText("Area is:", areaText);
-
     outputPanel.addText("Volume is:");
-    outputPanel.setText("Volume is:", volumeText);
-
 }
 
 function setup() {
+
+    var testing = new triangularPrism(20, 30, 40);
+    console.log(testing.area());
     //calcCanvas = createCanvas(windowWidth / 4, windowHeight);
     p5Gui_setup();
     quickSettings_setup();
-
+    upateCalcs();
 }
 
 //alert("The area of the triangle is: " +  triangularPrism.area() + " millimeters cubed.");
