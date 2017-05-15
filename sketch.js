@@ -26,12 +26,10 @@ function setup() {
         height: 60,
         thickness: 70,
         area: function () {
-
             return this.base * 0.5 * this.height;
 
         },
         volume: function () {
-
             return this.area * this.thickness;
         }
     });
@@ -46,9 +44,8 @@ function setup() {
 
         },
         volume: function () {
-
-
-        }
+            return this.area * this.height;
+        },
         showArea: function () {
             console.log(this.area());
         },
@@ -61,19 +58,14 @@ function setup() {
     });
 
     var reactorWallBrick = trapezoidal.create({
-            longLength: 270,
-            shortLength: 240,
-            height: 80,
-            thickness: 90,
-
-
-        },
-
-
+        longLength: 270,
+        shortLength: 240,
+        height: 80,
+        thickness: 90,
     });
-console.log(reactorWallBrick.showArea());
-console.log(reactorWallBrick.area());
-console.log(reactorWallBrick.showVolume());
+    console.log(reactorWallBrick.showArea());
+    console.log(reactorWallBrick.area());
+    console.log(reactorWallBrick.showVolume());
 
 }
 
