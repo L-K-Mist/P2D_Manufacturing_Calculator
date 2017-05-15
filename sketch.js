@@ -19,11 +19,11 @@ function trapezoidalPrism(longLength, shortLength, height, thickness) {
     this.area = function () {
         var calc = 0.5 * (this.longLength + this.longLength) * this.height;
         return calc;
-    }
+    };
     this.volume = function () {
         var calc = this.area() * this.thickness;
         return calc;
-    }
+    };
 }
 
 
@@ -119,7 +119,7 @@ function upateCalcs() {
 var triangleInputsPanel, trapezoidalInputsPanel;
 
 function quickSettings_setup() {
-//Having difficulty here. How did I get it right before
+    //Having difficulty here. How did I get it right before
     function makeRadioBehaviour() {
         var isTrapActive = trapezoidalInputsPanel.getBoolean('Make Trapezoid Active?');
         var isTriActive = triangleInputsPanel.getBoolean('Make Triangle Active?');
@@ -166,7 +166,7 @@ function quickSettings_setup() {
     function trapezoidalInputsGUI() {
         trapezoidalInputsPanel = QuickSettings.create(600, 100, 'Trapezoidal Attributes');
         trapezoidalInputsPanel.addBoolean('Make Trapezoid Active?', false, makeRadioBehaviour);
-        trapezoidalInputsPanel.on
+
         trapezoidalInputsPanel.addHTML('Tips', 'For fine tuning, nudge the active slider with your keyboard left and right arrows');
         trapezoidalInputsPanel.addRange('Trapezoidal longLength', 5, 400, 1, setInputVariables);
         trapezoidalInputsPanel.addRange('Trapezoidal shortLength', 5, 400, 1, setInputVariables);
@@ -190,5 +190,4 @@ function setup() {
 }
 
 //alert("The area of the triangle is: " +  triangularPrism.area() + " millimeters cubed.");
-function draw() {
-}
+function draw() {}
