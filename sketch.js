@@ -44,13 +44,13 @@ function setup() {
 
         },
         volume: function () {
-            return this.area * this.height;
+            return this.area() * this.height;
         },
         showArea: function () {
             console.log(this.area());
         },
         showVolume: function () {
-            console.log(this.volume);
+            console.log(this.volume());
         }
 
 
@@ -65,7 +65,8 @@ function setup() {
     });
     console.log(reactorWallBrick.showArea());
     console.log(reactorWallBrick.area());
-    console.log(reactorWallBrick.showVolume());
+    console.log(reactorWallBrick.longLength)
+    console.log(reactorWallBrick.volume());
 
 }
 
