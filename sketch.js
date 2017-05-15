@@ -1,3 +1,11 @@
+var coffeeTinsWet = 8;
+var cupsClay = 20;
+var cupsLime = 16;
+var cupsPortland = 16;
+var cupsSand = 16;
+
+
+
 var prism = {
     type: "Like trapezoidPrism, triangularPri",
     create: function (values) {
@@ -16,77 +24,82 @@ var prism = {
 
 };
 
+var triangular = prism.create({
+    type: "Triangular Prism",
+    base: 50,
+    height: 60,
+    thickness: 70,
+    area: function () {
+        return this.base * 0.5 * this.height;
+
+    },
+    volume: function () {
+        return this.area() * this.thickness;
+    }
+});
+
+var trapezoidal = prism.create({
+    type: "Trapezoidal Prism",
+    longLength: 50,
+    shortLength: 60,
+    height: 70,
+    area: function () {
+        return 0.5 * this.height * (this.longLength + this.shortLength);
+
+    },
+    volume: function () {
+        return this.area() * this.thickness;
+    },
+
+});
+
+var reactorWallBrick = trapezoidal.create({
+    longLength: 270,
+    shortLength: 240,
+    height: 80,
+    thickness: 90,
+    showArea: function () {
+        console.log(this.area());
+    },
+    showVolume: function () {
+        console.log(
+            this.volume()
+        );
+    }
+});
+
+
+//trying the other method
+var innerTriangleBrick = triangular.create({
+    //TODO later simplify with checks
+    //Choosing to test setting variables here, but functions using dot notation
+    base: 240,
+    height: 160,
+    thickness: 90,
+});
+
+innerTriangleBrick.showArea = function () {
+    console.log("Area is: ", innerTriangleBrick.area());
+
+};
+innerTriangleBrick.showVolume = function () {
+    console.log("Volume is:", innerTriangleBrick.volume());
+};
+
 
 function setup() {
 
-    var triangular = prism.create({
-        type: "Triangular Prism",
-        base: 50,
-        height: 60,
-        thickness: 70,
-        area: function () {
-            return this.base * 0.5 * this.height;
 
-        },
-        volume: function () {
-            return this.area() * this.thickness;
-        }
-    });
 
-    var trapezoidal = prism.create({
-        type: "Trapezoidal Prism",
-        longLength: 50,
-        shortLength: 60,
-        height: 70,
-        area: function () {
-            return 0.5 * this.height * (this.longLength + this.shortLength);
-
-        },
-        volume: function () {
-            return this.area() * this.thickness;
-        },
-
-    });
-
-    var reactorWallBrick = trapezoidal.create({
-        longLength: 270,
-        shortLength: 240,
-        height: 80,
-        thickness: 90,
-        showArea: function () {
-            console.log(this.area());
-        },
-        showVolume: function () {
-            console.log(
-                this.volume()
-            );
-        }
-    });
     console.log(reactorWallBrick.showArea());
     console.log(reactorWallBrick.area());
     console.log(reactorWallBrick.longLength);
     console.log(reactorWallBrick.volume());
 
-
-
-    //trying the other method
-    var innerTriangleBrick = triangular.create({
-        //TODO later simplify with checks
-        //Choosing to test setting variables here, but functions using dot notation
-        base: 240,
-        height: 160,
-        thickness: 90,
-    });
-
-    innerTriangleBrick.showArea = function () {
-        console.log("Area is: ", innerTriangleBrick.area());
-
-    };
-    innerTriangleBrick.showVolume = function () {
-        console.log("Volume is:", innerTriangleBrick.volume());
-    };
     innerTriangleBrick.showArea();
     innerTriangleBrick.showVolume();
+
+
 
 
 }
@@ -99,11 +112,6 @@ function setup() {
 
 
 
-//var coffeeTinsWet = 8;
-//var cupsClay = 20;
-//var cupsLime = 16;
-//var cupsPortland = 16;
-//var cupsSand = 16;
 //
 //
 ////Trapezoid (US)
