@@ -7,11 +7,7 @@ var prism = {
         });
         return instance;
     },
-    area: 500,
     thickness: 50,
-    volume: function () {
-        return this.area() * this.thickness;
-    },
     unitOfMeasurement: ["millimeters"],
 
     sayType: function () {
@@ -33,8 +29,7 @@ function setup() {
 
         },
         volume: function () {
-            prism.volume();
-            console.log(this.volume());
+            return this.area() * this.thickness;
         }
     });
 
@@ -92,6 +87,8 @@ function setup() {
     };
     innerTriangleBrick.showArea();
     innerTriangleBrick.showVolume();
+
+
 }
 
 
