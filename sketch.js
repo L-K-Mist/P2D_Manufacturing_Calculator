@@ -9,6 +9,9 @@ var prism = {
     },
     area: 500,
     thickness: 50,
+    volume: function () {
+        return this.area() * this.thickness;
+    },
     unitOfMeasurement: ["millimeters"],
 
     sayType: function () {
@@ -30,7 +33,8 @@ function setup() {
 
         },
         volume: function () {
-            return this.area * this.thickness;
+            prism.volume();
+            console.log(this.volume());
         }
     });
 
@@ -40,20 +44,12 @@ function setup() {
         shortLength: 60,
         height: 70,
         area: function () {
-            return 0.5 * (this.longLength + this.longLength) * this.height;
+            return 0.5 * this.height * (this.longLength + this.shortLength);
 
         },
         volume: function () {
-            return this.area() * this.height;
+            return this.area() * this.thickness;
         },
-        showArea: function () {
-            console.log(this.area());
-        },
-        showVolume: function () {
-            console.log(this.volume());
-        }
-
-
 
     });
 
@@ -62,12 +58,40 @@ function setup() {
         shortLength: 240,
         height: 80,
         thickness: 90,
+        showArea: function () {
+            console.log(this.area());
+        },
+        showVolume: function () {
+            console.log(
+                this.volume()
+            );
+        }
     });
     console.log(reactorWallBrick.showArea());
     console.log(reactorWallBrick.area());
-    console.log(reactorWallBrick.longLength)
+    console.log(reactorWallBrick.longLength);
     console.log(reactorWallBrick.volume());
 
+
+
+    //trying the other method
+    var innerTriangleBrick = triangular.create({
+        //TODO later simplify with checks
+        //Choosing to test setting variables here, but functions using dot notation
+        base: 240,
+        height: 160,
+        thickness: 90,
+    });
+
+    innerTriangleBrick.showArea = function () {
+        console.log("Area is: ", innerTriangleBrick.area());
+
+    };
+    innerTriangleBrick.showVolume = function () {
+        console.log("Volume is:", innerTriangleBrick.volume());
+    };
+    innerTriangleBrick.showArea();
+    innerTriangleBrick.showVolume();
 }
 
 
