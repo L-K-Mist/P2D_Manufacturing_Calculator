@@ -191,5 +191,4 @@ function setup() {
 
 //alert("The area of the triangle is: " +  triangularPrism.area() + " millimeters cubed.");
 function draw() {
-
 }
